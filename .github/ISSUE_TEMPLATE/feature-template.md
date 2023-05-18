@@ -7,11 +7,12 @@ assignees: ''
 
 ---
 
-### 기능 추가 요약
--
+## 📝 Description
 
-### 추가되는 Dependency 
--
+설명을 작성하세요.
 
-### 개발 시 참고되는 Documentation
--
+
+## ✅ TODO
+
+- [ ] todo1
+- [ ] todo2
