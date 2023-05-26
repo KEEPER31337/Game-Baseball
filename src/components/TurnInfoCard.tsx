@@ -9,7 +9,7 @@ interface TurnInfoCardProps {
   index: number;
   value?: string;
   status: 'Ready' | 'Playing' | 'Finished';
-  result?: ResultDto;
+  result?: ResultDto | null;
 }
 
 const TurnInfoCard = ({ index, value, status, result }: TurnInfoCardProps) => {
@@ -20,7 +20,7 @@ const TurnInfoCard = ({ index, value, status, result }: TurnInfoCardProps) => {
       }`}
     >
       <p className={`w-12 text-right ${status === 'Playing' ? 'text-pointBlue' : 'text-pointGray'}`}>{index}</p>
-      <p className="w-32 text-center">{value}</p>
+      <p className="w-32 text-center">{status === 'Finished' && result === null ? '❌' : value}</p>
       <p className="w-14 tracking-widest">
         {result?.ball && result?.ball !== 0 ? '🟢' : '⚫️'} {result?.ball}
       </p>
