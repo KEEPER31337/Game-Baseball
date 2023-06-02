@@ -13,7 +13,7 @@ const GamePlay = () => {
       <TurnInfoBoard />
       <div className="flex items-center space-x-4">
         <NumberInput />
-        <CiBaseball size={50} className=" fill-pointBlue hover:rounded-full hover:bg-pointBlue/10" />
+        <CiBaseball size={50} className="fill-pointBlue hover:rounded-full hover:bg-pointBlue/10" />
       </div>
     </div>
   );
