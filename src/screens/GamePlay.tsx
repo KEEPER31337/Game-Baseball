@@ -10,7 +10,7 @@ const GamePlay = () => {
     <div>
       <PointInfo />
       <CountdownBar />
-      <TurnInfoBoard />
+      <TurnInfoBoard results={[{ ball: 1, strike: 2 }, null, { ball: 2, strike: 1 }]} round={9} />
       <div className="flex items-center space-x-4">
         <NumberInput />
         <CiBaseball size={50} className="cursor-pointer fill-pointBlue hover:rounded-full hover:bg-pointBlue/20" />
