@@ -9,7 +9,7 @@ const GamePlay = () => {
   return (
     <div>
       <PointInfo />
-      <CountdownBar />
+      <CountdownBar flag />
       <TurnInfoBoard />
       <div className="flex items-center space-x-4">
         <NumberInput />
