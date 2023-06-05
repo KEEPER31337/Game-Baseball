@@ -1,10 +1,5 @@
 import React from 'react';
-import TurnInfoCard from './TurnInfoCard';
-
-interface ResultDto {
-  ball: number;
-  strike: number;
-}
+import TurnInfoCard, { ResultDto } from './TurnInfoCard';
 
 interface TurnInfoBoardProps {
   results: Array<ResultDto | null>;
