@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-const GameStart = ({ onStart }: { onStart: any }) => {
+interface GameStartProps {
+  onStart: () => void;
+}
+
+const GameStart = ({ onStart }: GameStartProps) => {
   const [point, setPoint] = useState<string>('');
 
   return (
