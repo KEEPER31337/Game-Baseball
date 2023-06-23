@@ -5,13 +5,13 @@ import GamePlay from './screens/GamePlay';
 const App = () => {
   const [playMode, setPlayMode] = useState(false);
 
-  const onStart = () => {
+  const handleStart = () => {
     setPlayMode(true);
   };
 
   return (
     <div className="grid h-screen w-screen place-items-center bg-mainBlack">
-      {playMode ? <GamePlay /> : <GameStart onStart={onStart} />}
+      {playMode ? <GamePlay /> : <GameStart onStart={handleStart} />}
     </div>
   );
 };
