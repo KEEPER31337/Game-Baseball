@@ -7,7 +7,7 @@ import NumberInput from '../components/NumberInput';
 const GamePlay = () => {
   return (
     <div>
-      <PointInfo />
+      <PointInfo point={0} />
       <CountdownBar />
       <TurnInfoBoard />
       <NumberInput />

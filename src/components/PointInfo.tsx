@@ -1,7 +1,15 @@
 import React from 'react';
 
-const PointInfo = () => {
-  return <div>획득 가능 포인트 섹션 입니다.</div>;
+interface PointInfoProps {
+  point: number;
+}
+
+const PointInfo = ({ point }: PointInfoProps) => {
+  return (
+    <div className="grid place-items-center">
+      <p className="text-2xl">POINT {point}</p>
+    </div>
+  );
 };
 
 export default PointInfo;
