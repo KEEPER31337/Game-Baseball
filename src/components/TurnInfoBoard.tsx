@@ -7,9 +7,11 @@ interface TurnInfoBoardProps {
 }
 
 const TurnInfoBoard = ({ results, round }: TurnInfoBoardProps) => {
-  const renderList = new Array<'Ready' | 'Playing' | 'Finished'>(results.length).fill('Finished');
-  if (round > results.length) renderList.push('Playing');
-  if (round > results.length + 1) renderList.push(...new Array(round - results.length - 1).fill('Ready'));
+  const renderList: Array<'Ready' | 'Playing' | 'Finished'> = Array.from({ length: round }, (v, i) => {
+    if (i === results.length) return 'Playing';
+    if (i > results.length) return 'Ready';
+    return 'Finished';
+  });
   return (
     <div>
       {renderList.map((status, index) => (
