@@ -8,6 +8,13 @@ export interface ResultInfo {
 }
 
 export interface GameResultInfo {
-  result: Array<ResultInfo | null>;
-  earnedPoint: number;
+  results: Array<ResultInfo | null>;
+  earnablePoints: number;
+}
+
+export interface GameInfo {
+  guessNumberLength: number;
+  tryCount: number;
+  maxBettingPoint: number;
+  minBettingPoint: number;
 }
