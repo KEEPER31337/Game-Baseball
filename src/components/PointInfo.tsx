@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface PointInfoProps {
-  point: number;
+  earnablePoint: number;
 }
 
-const PointInfo = ({ point }: PointInfoProps) => {
+const PointInfo = ({ earnablePoint }: PointInfoProps) => {
   return (
     <div className="grid place-items-center">
-      <p className="text-2xl">POINT {point}</p>
+      <p className="text-2xl">POINT {earnablePoint}</p>
     </div>
   );
 };
