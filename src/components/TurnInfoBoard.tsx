@@ -1,8 +1,9 @@
 import React from 'react';
-import TurnInfoCard, { ResultDto } from './TurnInfoCard';
+import TurnInfoCard from './TurnInfoCard';
+import { ResultInfo } from '../api/dto';
 
 interface TurnInfoBoardProps {
-  results: Array<ResultDto | null>;
+  results: Array<ResultInfo | null>;
   round: number;
 }
 
