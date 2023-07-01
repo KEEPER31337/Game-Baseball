@@ -8,7 +8,7 @@ import NumberInput from '../components/NumberInput';
 const GamePlay = () => {
   return (
     <div>
-      <PointInfo />
+      <PointInfo earnablePoint={0} />
       <CountdownBar />
       <TurnInfoBoard
         results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
