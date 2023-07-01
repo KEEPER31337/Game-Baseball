@@ -1,7 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const GameStart = () => {
-  return <div>시작화면 입니다.</div>;
+const MIN_BETTING_POINT = 10;
+const MAX_BETTING_POINT = 1000;
+
+interface GameStartProps {
+  onStart: () => void;
+}
+
+const GameStart = ({ onStart }: GameStartProps) => {
+  const [point, setPoint] = useState<string>('');
+
+  return (
+    <div className="flex h-full w-full flex-col place-content-center place-items-center">
+      <div className="mb-10 text-[40px] font-bold text-pointBlue">BASEBALL GAME</div>
+      <div className="mb-10 text-2xl">betting your point...</div>
+      <input
+        value={point}
+        onChange={(e) => {
+          setPoint(e.target.value.replace(/[^0-9]/g, ''));
+        }}
+        className="mb-20 w-[400px] border-[1px] border-pointBlue bg-transparent text-center text-[40px] focus:outline-none"
+        type="text"
+        placeholder={`${MIN_BETTING_POINT} ~ ${MAX_BETTING_POINT}`}
+      />
+      <button
+        disabled={parseInt(point, 10) > MAX_BETTING_POINT || parseInt(point, 10) < MIN_BETTING_POINT || point === ''}
+        className="text-2xl enabled:hover:text-pointBlue disabled:text-gray-500"
+        onClick={onStart}
+        type="button"
+      >
+        START
+      </button>
+    </div>
+  );
 };
 
 export default GameStart;
