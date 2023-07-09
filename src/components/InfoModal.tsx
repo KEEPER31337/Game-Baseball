@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { ResultDto } from './TurnInfoCard';
 
 interface InfoModalProps {
   onClose: () => void;
   InfoType: 'win' | 'lose' | 'next' | 'result';
-  guessNumber?: number;
-  strike?: number;
-  ball?: number;
+  results?: ResultDto;
 }
 
-const InfoModal = ({ onClose, InfoType, guessNumber, strike, ball }: InfoModalProps) => {
+const InfoModal = ({ onClose, InfoType, results }: InfoModalProps) => {
   const [mainInfoText, setMainInfoText] = useState<string>('');
   const [subInfoText, setSubInfoText] = useState<string>('');
   useEffect(() => {
@@ -26,8 +25,8 @@ const InfoModal = ({ onClose, InfoType, guessNumber, strike, ball }: InfoModalPr
         setSubInfoText('NEXT TURN');
         break;
       default:
-        setMainInfoText(String(guessNumber));
-        setSubInfoText(`STRIKE ${String(strike)} BALL ${String(ball)}`);
+        setMainInfoText(String(results?.guessNumber));
+        setSubInfoText(`STRIKE ${String(results?.strike)} BALL ${String(results?.ball)}`);
         break;
     }
   }, []);

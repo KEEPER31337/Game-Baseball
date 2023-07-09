@@ -25,7 +25,11 @@ const GamePlay = () => {
         confirm modal 버튼
       </button>
       {infoModalOpen && (
-        <InfoModal InfoType="result" guessNumber={1234} strike={2} ball={1} onClose={() => setInfoModalOpen(false)} />
+        <InfoModal
+          InfoType="result"
+          results={{ ball: 0, strike: 2, guessNumber: '1234' }}
+          onClose={() => setInfoModalOpen(false)}
+        />
       )}
     </div>
   );
