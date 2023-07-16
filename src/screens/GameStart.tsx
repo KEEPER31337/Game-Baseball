@@ -8,7 +8,7 @@ interface GameStartProps {
 }
 
 const GameStart = ({ onStart }: GameStartProps) => {
-  const [bettingPoint, setPoint] = useState<string>('');
+  const [bettingPoint, setBettingPoint] = useState<string>('');
 
   return (
     <div className="flex h-full w-full flex-col place-content-center place-items-center">
@@ -17,7 +17,7 @@ const GameStart = ({ onStart }: GameStartProps) => {
       <input
         value={bettingPoint}
         onChange={(e) => {
-          setPoint(e.target.value.replace(/[^0-9]/g, ''));
+          setBettingPoint(e.target.value.replace(/[^0-9]/g, ''));
         }}
         className="mb-20 w-[400px] border-[1px] border-pointBlue bg-transparent text-center text-[40px] focus:outline-none"
         type="text"
