@@ -8,14 +8,14 @@ interface GameStartProps {
 }
 
 const GameStart = ({ onStart }: GameStartProps) => {
-  const [point, setPoint] = useState<string>('');
+  const [bettingPoint, setPoint] = useState<string>('');
 
   return (
     <div className="flex h-full w-full flex-col place-content-center place-items-center">
       <div className="mb-10 text-[40px] font-bold text-pointBlue">BASEBALL GAME</div>
       <div className="mb-10 text-2xl">betting your point...</div>
       <input
-        value={point}
+        value={bettingPoint}
         onChange={(e) => {
           setPoint(e.target.value.replace(/[^0-9]/g, ''));
         }}
@@ -24,7 +24,11 @@ const GameStart = ({ onStart }: GameStartProps) => {
         placeholder={`${MIN_BETTING_POINT} ~ ${MAX_BETTING_POINT}`}
       />
       <button
-        disabled={parseInt(point, 10) > MAX_BETTING_POINT || parseInt(point, 10) < MIN_BETTING_POINT || point === ''}
+        disabled={
+          parseInt(bettingPoint, 10) > MAX_BETTING_POINT ||
+          parseInt(bettingPoint, 10) < MIN_BETTING_POINT ||
+          bettingPoint === ''
+        }
         className="text-2xl enabled:hover:text-pointBlue disabled:text-gray-500"
         onClick={onStart}
         type="button"
