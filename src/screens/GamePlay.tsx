@@ -9,7 +9,7 @@ const GamePlay = () => {
   return (
     <div>
       <PointInfo />
-      <CountdownBar flag />
+      <CountdownBar isTurnStart />
       <TurnInfoBoard
         results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
         round={9}

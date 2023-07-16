@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 interface CountdownProps {
-  flag: boolean;
+  isTurnStart: boolean;
 }
 
-const CountdownBar = ({ flag }: CountdownProps) => {
+const CountdownBar = ({ isTurnStart }: CountdownProps) => {
   const maxCount = 30;
   const [count, setCount] = useState(maxCount);
   const interval = useRef<NodeJS.Timeout | null>(null);
@@ -30,11 +30,11 @@ const CountdownBar = ({ flag }: CountdownProps) => {
   }, [count]);
 
   useEffect(() => {
-    if (flag === true) {
+    if (isTurnStart === true) {
       setCount(maxCount);
       handleStart();
     } else handleStop();
-  }, [flag]);
+  }, [isTurnStart]);
 
   return (
     <div>
