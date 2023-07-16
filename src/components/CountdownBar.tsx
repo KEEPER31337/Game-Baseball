@@ -10,7 +10,7 @@ const CountdownBar = ({ isTurnStart }: CountdownProps) => {
   const interval = useRef<NodeJS.Timeout | null>(null);
   const countPercentage = (count / maxCount) * 100;
 
-  const handleStart = () => {
+  const countdownStart = () => {
     if (!interval.current) {
       interval.current = setInterval(() => {
         setCount((cnt) => cnt - 1);
@@ -18,7 +18,7 @@ const CountdownBar = ({ isTurnStart }: CountdownProps) => {
     }
   };
 
-  const handleStop = () => {
+  const countdownStop = () => {
     if (interval.current) {
       clearInterval(interval.current);
       interval.current = null;
@@ -26,14 +26,14 @@ const CountdownBar = ({ isTurnStart }: CountdownProps) => {
   };
 
   useEffect(() => {
-    if (count < 1) handleStop();
+    if (count < 1) countdownStop();
   }, [count]);
 
   useEffect(() => {
     if (isTurnStart === true) {
       setCount(maxCount);
-      handleStart();
-    } else handleStop();
+      countdownStart();
+    } else countdownStop();
   }, [isTurnStart]);
 
   return (
