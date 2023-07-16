@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CiBaseball } from 'react-icons/ci';
 import PointInfo from '../components/PointInfo';
 import CountdownBar from '../components/CountdownBar';
 import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
+import InfoModal from '../components/InfoModal';
 
 const GamePlay = () => {
+  const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
+
   return (
     <div>
       <PointInfo />
@@ -18,6 +21,16 @@ const GamePlay = () => {
         <NumberInput />
         <CiBaseball size={50} className="cursor-pointer fill-pointBlue hover:rounded-full hover:bg-pointBlue/20" />
       </div>
+      <button className="bg-pointBlue/50" type="submit" onClick={() => setInfoModalOpen(true)}>
+        confirm modal 버튼
+      </button>
+      {infoModalOpen && (
+        <InfoModal
+          infoType="result"
+          results={{ ball: 0, strike: 2, guessNumber: '1234' }}
+          onClose={() => setInfoModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
