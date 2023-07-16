@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-interface CountdownProps {
+interface CountdownBarProps {
   isTurnStart: boolean;
 }
 
-const CountdownBar = ({ isTurnStart }: CountdownProps) => {
+const CountdownBar = ({ isTurnStart }: CountdownBarProps) => {
   const maxCount = 30;
   const [count, setCount] = useState(maxCount);
   const interval = useRef<NodeJS.Timeout | null>(null);
