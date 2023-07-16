@@ -37,7 +37,7 @@ const CountdownBar = ({ flag }: CountdownProps) => {
   }, [flag]);
 
   return (
-    <div className="App">
+    <div>
       <div className="h-6 w-[350px] bg-pointGray">
         <div
           style={{ width: `${countPercentage}%` }}
