@@ -3,38 +3,39 @@ import { ResultDto } from './TurnInfoCard';
 
 interface InfoModalProps {
   onClose: () => void;
-  InfoType: 'win' | 'lose' | 'next' | 'result';
+  infoType: 'win' | 'lose' | 'next' | 'result';
   results?: ResultDto;
 }
 
-const InfoModal = ({ onClose, InfoType, results }: InfoModalProps) => {
+const InfoModal = ({ onClose, infoType, results }: InfoModalProps) => {
+  const msg = {
+    win: {
+      main: 'congraturation',
+      sub: 'YOU WIN!',
+    },
+    lose: {
+      main: 'no more chance',
+      sub: 'GAME OVER',
+    },
+    next: {
+      main: "time's up",
+      sub: 'NEXT TURN',
+    },
+    result: {
+      main: null,
+      sub: null,
+    },
+  };
   const [mainInfoText, setMainInfoText] = useState<string>('');
   const [subInfoText, setSubInfoText] = useState<string>('');
-  useEffect(() => {
-    switch (InfoType) {
-      case 'win':
-        setMainInfoText('congraturation');
-        setSubInfoText('YOU WIN!');
-        break;
-      case 'lose':
-        setMainInfoText('no more chance');
-        setSubInfoText('GAME OVER');
-        break;
-      case 'next':
-        setMainInfoText("time's up");
-        setSubInfoText('NEXT TURN');
-        break;
-      default:
-        setMainInfoText(String(results?.guessNumber));
-        setSubInfoText(`STRIKE ${String(results?.strike)} BALL ${String(results?.ball)}`);
-        break;
-    }
-  }, []);
 
   const [count, setCount] = useState(3);
   const interval = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
+    setMainInfoText(msg[infoType]?.main || String(results?.guessNumber));
+    setSubInfoText(msg[infoType]?.sub || `STRIKE ${String(results?.strike)} BALL ${String(results?.ball)}`);
+
     interval.current = setInterval(() => {
       setCount((cnt) => cnt - 1);
     }, 1000);

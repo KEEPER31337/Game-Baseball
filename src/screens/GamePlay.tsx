@@ -26,7 +26,7 @@ const GamePlay = () => {
       </button>
       {infoModalOpen && (
         <InfoModal
-          InfoType="result"
+          infoType="result"
           results={{ ball: 0, strike: 2, guessNumber: '1234' }}
           onClose={() => setInfoModalOpen(false)}
         />
