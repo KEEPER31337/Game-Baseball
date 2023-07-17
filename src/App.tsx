@@ -3,7 +3,7 @@ import GameStart from './screens/GameStart';
 import GamePlay from './screens/GamePlay';
 
 const App = () => {
-  const playMode = false;
+  const playMode = true;
   // TODO const [playMode, setPlayMode] = useState(false);
 
   return (
