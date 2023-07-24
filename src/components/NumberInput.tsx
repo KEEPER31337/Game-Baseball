@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
-import OTPInput from 'otp-input-react';
+import AuthCode from 'react-auth-code-input';
 
 const NumberInput = () => {
   const [number, setNumber] = useState('');
+  const handleOnChange = (res: string) => {
+    setNumber(res);
+  };
 
   return (
-    <OTPInput
-      value={number}
-      onChange={setNumber}
-      OTPLength={4}
-      otpType="number"
-      inputClassName="border border-dashed border-pointBlue bg-transparent text-[32px] focus:outline-none"
-      inputStyles={{
-        width: '50px',
-        height: '60px',
-        'margin-right': '5px',
-      }}
-      disabled={false}
+    <AuthCode
+      allowedCharacters="numeric"
+      onChange={handleOnChange}
+      length={4}
+      inputClassName="w-[50px] h-[60px] border border-dashed border-pointBlue bg-transparent text-[32px] text-center mr-3 focus:outline-none"
       autoFocus
     />
   );
