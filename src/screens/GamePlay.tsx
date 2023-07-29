@@ -7,7 +7,11 @@ import NumberInput from '../components/NumberInput';
 import InfoModal from '../components/InfoModal';
 import { useGetGameInfoQuery } from '../api/baseballApi';
 
-const GamePlay = () => {
+interface GamePlayProps {
+  bettingPoint: string;
+}
+
+const GamePlay = ({ bettingPoint }: GamePlayProps) => {
   const [guessNumber, setGuessNumber] = useState('');
   const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
   const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
@@ -15,7 +19,7 @@ const GamePlay = () => {
   if (gameInfoLoading || !gameInfo) return null;
   return (
     <div>
-      <PointInfo earnablePoint={0} />
+      <PointInfo earnablePoint={bettingPoint} />
       <CountdownBar isTurnStart />
       <TurnInfoBoard
         results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
