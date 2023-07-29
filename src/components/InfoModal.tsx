@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ResultDto } from './TurnInfoCard';
+import { ResultInfo } from '../api/dto';
 
 interface InfoModalProps {
   onClose: () => void;
   infoType: 'win' | 'lose' | 'next' | 'result';
-  results?: ResultDto;
+  results?: ResultInfo;
 }
 
 const InfoModal = ({ onClose, infoType, results }: InfoModalProps) => {
