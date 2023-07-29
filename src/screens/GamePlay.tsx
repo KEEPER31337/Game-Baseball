@@ -5,18 +5,21 @@ import CountdownBar from '../components/CountdownBar';
 import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
 import InfoModal from '../components/InfoModal';
+import { useGetGameInfoQuery } from '../api/baseballApi';
 
 const GamePlay = () => {
   const [guessNumber, setGuessNumber] = useState('');
   const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
+  const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
 
+  if (gameInfoLoading || !gameInfo) return null;
   return (
     <div>
       <PointInfo earnablePoint={0} />
       <CountdownBar isTurnStart />
       <TurnInfoBoard
         results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
-        round={9}
+        round={gameInfo.tryCount}
       />
       <div className="flex items-center space-x-4">
         <NumberInput onChange={(res: string) => setGuessNumber(res)} />
