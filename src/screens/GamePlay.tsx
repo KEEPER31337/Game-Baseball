@@ -7,10 +7,14 @@ import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
 import InfoModal from '../components/InfoModal';
 import { useGuessMutation, useGetGameInfoQuery } from '../api/baseballApi';
+import { ResultInfo } from '../api/dto';
 
 const GamePlay = () => {
   const [guessNumber, setGuessNumber] = useState('');
-  const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
+  const [infoModalSetting, setInfoModalSetting] = useState<{ open: boolean; result: ResultInfo | null }>({
+    open: false,
+    result: null,
+  });
   const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
 
   const AuthInputRef = useRef<AuthCodeRef>(null);
@@ -22,7 +26,7 @@ const GamePlay = () => {
       {
         onSuccess: (data) => {
           AuthInputRef.current?.clear();
-          // TODO 모달 띄워주기
+          setInfoModalSetting({ open: true, result: data.results.at(-1) });
         },
       },
     );
@@ -48,14 +52,11 @@ const GamePlay = () => {
           <CiBaseball size={50} className=" fill-pointBlue group-disabled:fill-pointBlue/20" />
         </button>
       </div>
-      <button className="bg-pointBlue/50" type="submit" onClick={() => setInfoModalOpen(true)}>
-        confirm modal 버튼
-      </button>
-      {infoModalOpen && (
+      {infoModalSetting.open && infoModalSetting.result && (
         <InfoModal
           infoType="result"
-          results={{ ball: 0, strike: 2, guessNumber: '1234' }}
-          onClose={() => setInfoModalOpen(false)}
+          results={infoModalSetting.result}
+          onClose={() => setInfoModalSetting((prev) => ({ ...prev, open: false }))}
         />
       )}
     </div>
