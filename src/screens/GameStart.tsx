@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useGetGameInfoQuery, useGetIsAlreadyPlayedQuery } from '../api/baseballApi';
 
 interface GameStartProps {
@@ -10,16 +10,15 @@ interface GameStartProps {
 const GameStart = ({ onStart, bettingPoint, setBettingPoint }: GameStartProps) => {
   const { data: isPlayed } = useGetIsAlreadyPlayedQuery();
   const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
+  const gamePlayedMessage = isPlayed ? "You've already played the game!" : 'betting your point...';
 
   if (gameInfoLoading || !gameInfo) return null;
   return (
     <div className="flex h-full w-full flex-col place-content-center place-items-center">
       <div className="mb-10 text-[40px] font-bold text-pointBlue">BASEBALL GAME</div>
-      {isPlayed ? (
-        <div className="mb-10 text-2xl">You&apos;ve already played the game!</div>
-      ) : (
-        <div className="flex flex-col place-content-center place-items-center">
-          <div className="mb-10 text-2xl">betting your point...</div>
+      <div className="mb-10 text-2xl">{gamePlayedMessage}</div>
+      {!isPlayed && (
+        <>
           <input
             value={bettingPoint}
             onChange={(e) => {
@@ -41,7 +40,7 @@ const GameStart = ({ onStart, bettingPoint, setBettingPoint }: GameStartProps) =
           >
             START
           </button>
-        </div>
+        </>
       )}
     </div>
   );
