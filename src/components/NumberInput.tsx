@@ -1,13 +1,15 @@
 import React from 'react';
-import AuthCode from 'react-auth-code-input';
+import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
 
 interface NumberInputProps {
+  AuthInputRef: React.RefObject<AuthCodeRef>;
   onChange: (res: string) => void;
 }
 
-const NumberInput = ({ onChange }: NumberInputProps) => {
+const NumberInput = ({ AuthInputRef, onChange }: NumberInputProps) => {
   return (
     <AuthCode
+      ref={AuthInputRef}
       allowedCharacters="numeric"
       onChange={onChange}
       length={4}
