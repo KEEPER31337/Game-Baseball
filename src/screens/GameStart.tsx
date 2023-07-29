@@ -5,11 +5,11 @@ const MAX_BETTING_POINT = 1000;
 
 interface GameStartProps {
   onStart: () => void;
+  bettingPoint: string;
+  setBettingPoint: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const GameStart = ({ onStart }: GameStartProps) => {
-  const [bettingPoint, setBettingPoint] = useState<string>('');
-
+const GameStart = ({ onStart, bettingPoint, setBettingPoint }: GameStartProps) => {
   return (
     <div className="flex h-full w-full flex-col place-content-center place-items-center">
       <div className="mb-10 text-[40px] font-bold text-pointBlue">BASEBALL GAME</div>

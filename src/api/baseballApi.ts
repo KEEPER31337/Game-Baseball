@@ -20,8 +20,9 @@ const useGetIsAlreadyPlayedQuery = () => {
   return useQuery<boolean>(quearyKeys.is_already_played, fetcher);
 };
 
-const useGameStartMutation = ({ bettingPoint }: { bettingPoint: number }) => {
-  const fetcher = () => axios.post('/game/baseball/start', { bettingPoint }).then(({ data }) => data);
+const useGameStartMutation = () => {
+  const fetcher = ({ bettingPoint }: { bettingPoint: number }) =>
+    axios.post('/game/baseball/start', { bettingPoint }).then(({ data }) => data);
 
   return useMutation(fetcher);
 };
