@@ -1,18 +1,13 @@
 import React from 'react';
-
-interface ResultDto {
-  ball: number;
-  strike: number;
-}
+import { ResultInfo } from '../api/dto';
 
 interface TurnInfoCardProps {
   index: number;
-  value?: string;
   status: 'Ready' | 'Playing' | 'Finished';
-  result?: ResultDto | null;
+  result?: ResultInfo | null;
 }
 
-const TurnInfoCard = ({ index, value, status, result }: TurnInfoCardProps) => {
+const TurnInfoCard = ({ index, status, result }: TurnInfoCardProps) => {
   return (
     <div
       className={`flex border-2 bg-mainBlack text-xl ${
@@ -20,7 +15,7 @@ const TurnInfoCard = ({ index, value, status, result }: TurnInfoCardProps) => {
       }`}
     >
       <p className={`w-12 text-right ${status === 'Playing' ? 'text-pointBlue' : 'text-pointGray'}`}>{index}</p>
-      <p className="w-32 text-center">{status === 'Finished' && result === null ? '❌' : value}</p>
+      <p className="w-32 text-center">{status === 'Finished' && result === null ? '❌' : result?.guessNumber}</p>
       <p className="w-14 tracking-widest">
         {result?.ball && result?.ball !== 0 ? '🟢' : '⚫️'} {result?.ball}
       </p>
