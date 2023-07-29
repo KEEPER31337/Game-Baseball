@@ -27,11 +27,18 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
       />
       <div className="flex items-center space-x-1">
         <NumberInput onChange={(res: string) => setGuessNumber(res)} />
-        <CiBaseball size={50} className="cursor-pointer fill-pointBlue hover:rounded-full hover:bg-pointBlue/20" />
+        <CiBaseball
+          size={50}
+          className={
+            guessNumber.length === 4
+              ? 'cursor-pointer fill-pointBlue hover:rounded-full hover:bg-pointBlue/20'
+              : 'text-gray-500'
+          }
+          onClick={() => {
+            setInfoModalOpen(true);
+          }}
+        />
       </div>
-      <button className="bg-pointBlue/50" type="submit" onClick={() => setInfoModalOpen(true)}>
-        confirm modal 버튼
-      </button>
       {infoModalOpen && (
         <InfoModal
           infoType="result"
