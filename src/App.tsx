@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import GameStart from './screens/GameStart';
 import GamePlay from './screens/GamePlay';
-import { useGameStartMutation } from './api/baseballApi';
+import GameEnd from './screens/GameEnd';
+import { useGameStartMutation, useGetIsAlreadyPlayedQuery } from './api/baseballApi';
 
 const App = () => {
   const [bettingPoint, setBettingPoint] = useState<string>('');
   const [playMode, setPlayMode] = useState(false);
+  const { data: isPlayed } = useGetIsAlreadyPlayedQuery();
   const { mutate: gameStart } = useGameStartMutation();
 
   const handleStart = () => {
@@ -15,10 +17,16 @@ const App = () => {
 
   return (
     <div className="grid h-screen w-screen place-items-center bg-mainBlack">
-      {playMode ? (
-        <GamePlay />
+      {isPlayed ? (
+        <GameEnd />
       ) : (
-        <GameStart onStart={handleStart} bettingPoint={bettingPoint} setBettingPoint={setBettingPoint} />
+        <div>
+          {playMode ? (
+            <GamePlay />
+          ) : (
+            <GameStart onStart={handleStart} bettingPoint={bettingPoint} setBettingPoint={setBettingPoint} />
+          )}
+        </div>
       )}
     </div>
   );
