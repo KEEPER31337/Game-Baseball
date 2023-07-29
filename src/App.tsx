@@ -16,7 +16,7 @@ const App = () => {
   return (
     <div className="grid h-screen w-screen place-items-center bg-mainBlack">
       {playMode ? (
-        <GamePlay />
+        <GamePlay bettingPoint={bettingPoint} />
       ) : (
         <GameStart onStart={handleStart} bettingPoint={bettingPoint} setBettingPoint={setBettingPoint} />
       )}
