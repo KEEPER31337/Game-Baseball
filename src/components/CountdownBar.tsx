@@ -38,7 +38,7 @@ const CountdownBar = ({ isTurnStart }: CountdownBarProps) => {
 
   return (
     <div>
-      <div className="h-6 w-[350px] bg-pointGray">
+      <div className="mb-3 h-6 w-[350px] bg-pointGray">
         <div
           style={{ width: `${countPercentage}%` }}
           className="h-6 bg-pointBlue transition-all duration-1000 ease-linear"

@@ -11,6 +11,7 @@ const NumberInput = ({ onChange }: NumberInputProps) => {
       allowedCharacters="numeric"
       onChange={onChange}
       length={4}
+      containerClassName="ml-6"
       inputClassName="w-[50px] h-[60px] border border-dashed border-pointBlue bg-transparent text-[32px] text-center mr-3 focus:outline-none"
       autoFocus
     />

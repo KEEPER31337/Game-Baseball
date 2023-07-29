@@ -14,7 +14,7 @@ const TurnInfoBoard = ({ results, round }: TurnInfoBoardProps) => {
     return 'Finished';
   });
   return (
-    <div>
+    <div className="mb-4">
       {renderList.map((status, index) => (
         /* eslint-disable react/no-array-index-key */
         <TurnInfoCard key={index} index={index + 1} result={results?.[index]} status={status} />

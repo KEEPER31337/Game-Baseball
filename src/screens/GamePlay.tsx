@@ -25,7 +25,7 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
         results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
         round={gameInfo.tryCount}
       />
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-1">
         <NumberInput onChange={(res: string) => setGuessNumber(res)} />
         <CiBaseball size={50} className="cursor-pointer fill-pointBlue hover:rounded-full hover:bg-pointBlue/20" />
       </div>
