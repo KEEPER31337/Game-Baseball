@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CiBaseball } from 'react-icons/ci';
 import PointInfo from '../components/PointInfo';
 import CountdownBar from '../components/CountdownBar';
@@ -6,13 +6,15 @@ import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
 
 const GamePlay = () => {
+  const [guessNumber, setGuessNumber] = useState('');
+
   return (
     <div>
       <PointInfo />
       <CountdownBar />
       <TurnInfoBoard />
       <div className="flex items-center space-x-4">
-        <NumberInput />
+        <NumberInput onChange={(res: string) => setGuessNumber(res)} />
         <CiBaseball size={50} className="cursor-pointer fill-pointBlue hover:rounded-full hover:bg-pointBlue/20" />
       </div>
     </div>
