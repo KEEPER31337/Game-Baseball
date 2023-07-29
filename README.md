@@ -100,9 +100,9 @@
 
 | 시작 페이지 | 횟수 초과 | 게임 페이지 | 
 | --- | --- | --- |
-| <img src="https://user-images.githubusercontent.com/128127416/243159251-4846a350-0b10-4c86-b688-03138a83f54d.png" width="300"> |  <img src="https://user-images.githubusercontent.com/81643702/256970360-892864ac-f313-4031-b143-b475a1e54eae.png" width="300"> | <img src="https://i.ibb.co/9WLGzzV/2023-07-29-180808.png" width="300"> |
-| <div align="center">성공</div> | <div align="center">실패</div> |
-| <img src="https://i.ibb.co/mNjHM4g/2023-07-29-181216.png" width="300"> | <img src="https://i.ibb.co/6BNnLK3/2023-07-29-181419.png" width="300"> |
+| <img src="https://user-images.githubusercontent.com/128127416/243159251-4846a350-0b10-4c86-b688-03138a83f54d.png" width="300"> |  <img src="https://user-images.githubusercontent.com/81643702/256970360-892864ac-f313-4031-b143-b475a1e54eae.png" width="300"> | <img src="https://i.ibb.co/C8mj5jQ/2023-07-29-182535.png" width="300"> |
+| <div align="center">시도 결과</div> | <div align="center">성공</div> | <div align="center">실패</div> |
+| <img src="https://i.ibb.co/s3t0CMB/2023-07-29-182709.png" width="300">| <img src="https://i.ibb.co/mNjHM4g/2023-07-29-181216.png" width="300"> | <img src="https://i.ibb.co/6BNnLK3/2023-07-29-181419.png" width="300"> |
 
 ## ⚙️API 주소 목록
 
