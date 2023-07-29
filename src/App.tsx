@@ -8,7 +8,7 @@ const App = () => {
   const handleStart = () => {
     setPlayMode(true);
   };
-
+    
   return (
     <div className="grid h-screen w-screen place-items-center bg-mainBlack">
       {playMode ? <GamePlay /> : <GameStart onStart={handleStart} />}

@@ -1,16 +1,10 @@
 import React from 'react';
-
-type digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
-export interface ResultDto {
-  ball: number;
-  strike: number;
-  guessNumber: `${digit}${digit}${digit}${digit}`;
-}
+import { ResultInfo } from '../api/dto';
 
 interface TurnInfoCardProps {
   index: number;
   status: 'Ready' | 'Playing' | 'Finished';
-  result?: ResultDto | null;
+  result?: ResultInfo | null;
 }
 
 const TurnInfoCard = ({ index, status, result }: TurnInfoCardProps) => {
