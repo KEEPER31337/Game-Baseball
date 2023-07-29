@@ -7,6 +7,7 @@ import NumberInput from '../components/NumberInput';
 import InfoModal from '../components/InfoModal';
 
 const GamePlay = () => {
+  const [guessNumber, setGuessNumber] = useState('');
   const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
 
   return (
@@ -18,7 +19,7 @@ const GamePlay = () => {
         round={9}
       />
       <div className="flex items-center space-x-4">
-        <NumberInput />
+        <NumberInput onChange={(res: string) => setGuessNumber(res)} />
         <CiBaseball size={50} className="cursor-pointer fill-pointBlue hover:rounded-full hover:bg-pointBlue/20" />
       </div>
       <button className="bg-pointBlue/50" type="submit" onClick={() => setInfoModalOpen(true)}>
