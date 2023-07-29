@@ -15,7 +15,7 @@ const useGetGameInfoQuery = () => {
 };
 
 const useGetIsAlreadyPlayedQuery = () => {
-  const fetcher = () => axios.get('/game/baseball/is_already_played').then(({ data }) => data);
+  const fetcher = () => axios.get('/game/baseball/is-already-played').then(({ data }) => data);
 
   return useQuery<boolean>(quearyKeys.is_already_played, fetcher);
 };
