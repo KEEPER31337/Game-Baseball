@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CiBaseball } from 'react-icons/ci';
 import { AuthCodeRef } from 'react-auth-code-input';
 import PointInfo from '../components/PointInfo';
 import CountdownBar from '../components/CountdownBar';
 import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
-import InfoModal from '../components/InfoModal';
+import InfoModal, { InfoType } from '../components/InfoModal';
 import { useGuessMutation, useGetGameInfoQuery } from '../api/baseballApi';
 import { ResultInfo } from '../api/dto';
 
@@ -14,7 +14,12 @@ const INITIAL_TIME_PER_TURN = 30;
 const GamePlay = () => {
   const [guessNumber, setGuessNumber] = useState('');
   const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
-  const [infoModalSetting, setInfoModalSetting] = useState<{ open: boolean; result: ResultInfo | null }>({
+  const [infoModalSetting, setInfoModalSetting] = useState<{
+    type: InfoType;
+    open: boolean;
+    result: ResultInfo | null;
+  }>({
+    type: 'result',
     open: false,
     result: null,
   });
@@ -29,11 +34,21 @@ const GamePlay = () => {
       {
         onSuccess: (data) => {
           AuthInputRef.current?.clear();
-          setInfoModalSetting({ open: true, result: data.results.at(-1) });
+          setInfoModalSetting({ type: 'result', open: true, result: data.results.at(-1) });
         },
       },
     );
   };
+
+  useEffect(() => {
+    if (turnRemainTime === 0) {
+      setInfoModalSetting({
+        type: 'next',
+        open: true,
+        result: null,
+      });
+    }
+  }, [turnRemainTime]);
 
   if (gameInfoLoading || !gameInfo) return null;
   return (
@@ -60,10 +75,10 @@ const GamePlay = () => {
           <CiBaseball size={50} className=" fill-pointBlue group-disabled:fill-pointBlue/20" />
         </button>
       </div>
-      {infoModalSetting.open && infoModalSetting.result && (
+      {infoModalSetting.open && (
         <InfoModal
-          infoType="result"
-          results={infoModalSetting.result}
+          infoType={infoModalSetting.type}
+          result={infoModalSetting.result}
           onClose={() => setInfoModalSetting((prev) => ({ ...prev, open: false }))}
         />
       )}
