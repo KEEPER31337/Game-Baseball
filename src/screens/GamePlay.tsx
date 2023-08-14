@@ -9,8 +9,11 @@ import InfoModal from '../components/InfoModal';
 import { useGuessMutation, useGetGameInfoQuery } from '../api/baseballApi';
 import { ResultInfo } from '../api/dto';
 
+const INITIAL_TIME_PER_TURN = 30;
+
 const GamePlay = () => {
   const [guessNumber, setGuessNumber] = useState('');
+  const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
   const [infoModalSetting, setInfoModalSetting] = useState<{ open: boolean; result: ResultInfo | null }>({
     open: false,
     result: null,
@@ -36,7 +39,12 @@ const GamePlay = () => {
   return (
     <div>
       <PointInfo earnablePoint={0} />
-      <CountdownBar isTurnStart />
+      <CountdownBar
+        isTurnStart
+        initialTimePerTurn={INITIAL_TIME_PER_TURN}
+        turnRemainTime={turnRemainTime}
+        setTurnRemainTime={setTurnRemainTime}
+      />
       <TurnInfoBoard
         results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
         round={gameInfo.tryCount}
