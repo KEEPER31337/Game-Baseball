@@ -1,14 +1,14 @@
 import React from 'react';
-import { useGetGameInfoQuery, useGetIsAlreadyPlayedQuery } from '../api/baseballApi';
+import { useGetGameInfoQuery } from '../api/baseballApi';
 
 interface GameStartProps {
   onStart: () => void;
+  isPlayed: boolean;
   bettingPoint: string;
   setBettingPoint: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const GameStart = ({ onStart, bettingPoint, setBettingPoint }: GameStartProps) => {
-  const { data: isPlayed } = useGetIsAlreadyPlayedQuery();
+const GameStart = ({ onStart, isPlayed, bettingPoint, setBettingPoint }: GameStartProps) => {
   const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
   const gamePlayedMessage = isPlayed ? "You've already played the game!" : 'betting your point...';
 

@@ -7,13 +7,18 @@ import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
 import InfoModal, { InfoType } from '../components/InfoModal';
 import { useGuessMutation, useGetGameInfoQuery } from '../api/baseballApi';
-import { ResultInfo } from '../api/dto';
+import { GameResultInfo, ResultInfo } from '../api/dto';
 
 const INITIAL_TIME_PER_TURN = 30;
 
-const GamePlay = () => {
+interface GamePlayProps {
+  bettingPoint: string;
+  currentGameCondition: GameResultInfo;
+}
+
+const GamePlay = ({ bettingPoint, currentGameCondition }: GamePlayProps) => {
   const [guessNumber, setGuessNumber] = useState('');
-  const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>([]);
+  const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>(currentGameCondition.results);
   const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
   const [infoModalSetting, setInfoModalSetting] = useState<{
     type: InfoType;
@@ -36,6 +41,7 @@ const GamePlay = () => {
         onSuccess: (data) => {
           AuthInputRef.current?.clear();
           setInfoModalSetting({ type: 'result', open: true, result: data.results.at(-1) });
+          setGameResults(data.results);
         },
       },
     );
@@ -55,6 +61,7 @@ const GamePlay = () => {
   if (gameInfoLoading || !gameInfo) return null;
   return (
     <div>
+      {/* TODO earnablePoint - start api 호출 응답 */}
       <PointInfo earnablePoint={0} />
       <CountdownBar
         isTurnStart
@@ -62,10 +69,7 @@ const GamePlay = () => {
         turnRemainTime={turnRemainTime}
         setTurnRemainTime={setTurnRemainTime}
       />
-      <TurnInfoBoard
-        results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
-        round={gameInfo.tryCount}
-      />
+      <TurnInfoBoard results={gameResults} round={gameInfo.tryCount} />
       <div className="flex items-center space-x-4">
         <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
         <button
