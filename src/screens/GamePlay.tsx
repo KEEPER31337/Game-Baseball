@@ -13,6 +13,7 @@ const INITIAL_TIME_PER_TURN = 30;
 
 const GamePlay = () => {
   const [guessNumber, setGuessNumber] = useState('');
+  const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>([]);
   const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
   const [infoModalSetting, setInfoModalSetting] = useState<{
     type: InfoType;
@@ -47,6 +48,7 @@ const GamePlay = () => {
         open: true,
         result: null,
       });
+      setGameResults((prev) => [...prev, null]);
     }
   }, [turnRemainTime]);
 
