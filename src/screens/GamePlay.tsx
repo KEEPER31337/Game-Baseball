@@ -11,6 +11,7 @@ import { ResultInfo } from '../api/dto';
 
 const GamePlay = () => {
   const [guessNumber, setGuessNumber] = useState('');
+  const [gameResults, setGameResults] = useState([]);
   const [infoModalSetting, setInfoModalSetting] = useState<{ open: boolean; result: ResultInfo | null }>({
     open: false,
     result: null,
@@ -27,6 +28,7 @@ const GamePlay = () => {
         onSuccess: (data) => {
           AuthInputRef.current?.clear();
           setInfoModalSetting({ open: true, result: data.results.at(-1) });
+          setGameResults(data.results);
         },
       },
     );
@@ -37,11 +39,8 @@ const GamePlay = () => {
     <div>
       <PointInfo earnablePoint={0} />
       <CountdownBar isTurnStart />
-      <TurnInfoBoard
-        results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
-        round={gameInfo.tryCount}
-      />
-      <div className="flex items-center space-x-4">
+      <TurnInfoBoard results={gameResults} round={gameInfo.tryCount} />
+      <div className="flex items-center space-x-1">
         <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
         <button
           type="button"
