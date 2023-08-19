@@ -40,6 +40,16 @@ const GamePlay = () => {
     );
   };
 
+  const handleGuessChange = (res: string) => {
+    if (res.length > new Set(res).size) {
+      alert('중복된 숫자가 있습니다.');
+      AuthInputRef.current?.clear();
+      setGuessNumber('');
+    } else {
+      setGuessNumber(res);
+    }
+  };
+
   useEffect(() => {
     if (turnRemainTime === 0) {
       setInfoModalSetting({
@@ -65,7 +75,7 @@ const GamePlay = () => {
         round={gameInfo.tryCount}
       />
       <div className="flex items-center space-x-4">
-        <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
+        <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => handleGuessChange(res)} />
         <button
           type="button"
           className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20 "
