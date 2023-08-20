@@ -34,10 +34,11 @@ const useGuessMutation = () => {
   return useMutation(fetcher);
 };
 
-const useGetResultQuery = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const useGetResultQuery = (isPlayed: boolean) => {
   const fetcher = () => axios.get('/game/baseball/result').then(({ data }) => data);
-
-  return useQuery<GameResultInfo>(quearyKeys.result, fetcher);
+  /* TODO 백엔드 횟수제한 1회로 다시 맞춰지면 enabled에 isPlayed 적용해야 함 */
+  return useQuery<GameResultInfo>(quearyKeys.result, fetcher, { enabled: true });
 };
 
 export { useGetGameInfoQuery, useGetIsAlreadyPlayedQuery, useGameStartMutation, useGuessMutation, useGetResultQuery };
