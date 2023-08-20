@@ -6,19 +6,18 @@ import CountdownBar from '../components/CountdownBar';
 import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
 import InfoModal, { InfoType } from '../components/InfoModal';
-import { useGuessMutation, useGetGameInfoQuery } from '../api/baseballApi';
+import { useGuessMutation, useGetGameInfoQuery, useGetResultQuery } from '../api/baseballApi';
 import { GameResultInfo, ResultInfo } from '../api/dto';
 
 const INITIAL_TIME_PER_TURN = 30;
 
 interface GamePlayProps {
   bettingPoint: string;
-  currentGameCondition: GameResultInfo;
 }
 
-const GamePlay = ({ bettingPoint, currentGameCondition }: GamePlayProps) => {
+const GamePlay = ({ bettingPoint }: GamePlayProps) => {
   const [guessNumber, setGuessNumber] = useState('');
-  const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>(currentGameCondition.results);
+  const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>([]);
   const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
   const [infoModalSetting, setInfoModalSetting] = useState<{
     type: InfoType;
@@ -30,6 +29,7 @@ const GamePlay = ({ bettingPoint, currentGameCondition }: GamePlayProps) => {
     result: null,
   });
   const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
+  const { data: currentGameCondition } = useGetResultQuery();
 
   const AuthInputRef = useRef<AuthCodeRef>(null);
   const { mutate: guess } = useGuessMutation();
@@ -57,6 +57,12 @@ const GamePlay = ({ bettingPoint, currentGameCondition }: GamePlayProps) => {
       setGameResults((prev) => [...prev, null]);
     }
   }, [turnRemainTime]);
+
+  useEffect(() => {
+    if (currentGameCondition) {
+      setGameResults(currentGameCondition.results);
+    }
+  }, [currentGameCondition]);
 
   if (gameInfoLoading || !gameInfo) return null;
   return (
