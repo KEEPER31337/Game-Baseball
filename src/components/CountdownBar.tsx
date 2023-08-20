@@ -9,7 +9,7 @@ interface CountdownBarProps {
 
 const CountdownBar = ({ isTurnStart, initialTimePerTurn, turnRemainTime, setTurnRemainTime }: CountdownBarProps) => {
   const interval = useRef<NodeJS.Timeout | null>(null);
-  const countPercentage = (turnRemainTime / initialTimePerTurn) * 100;
+  const countPercentage = ((turnRemainTime - 1) / (initialTimePerTurn - 1)) * 100;
 
   const countdownStart = () => {
     if (!interval.current) {
@@ -27,7 +27,8 @@ const CountdownBar = ({ isTurnStart, initialTimePerTurn, turnRemainTime, setTurn
   };
 
   useEffect(() => {
-    if (turnRemainTime < 1) countdownStop();
+    console.log(turnRemainTime);
+    if (turnRemainTime === 0) countdownStop();
   }, [turnRemainTime]);
 
   useEffect(() => {
