@@ -82,7 +82,7 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
           type="button"
           className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20 "
           onClick={handleGuessClick}
-          disabled={Number(guessNumber) < 1000 || Number(guessNumber) > 9999}
+          disabled={guessNumber.length !== gameInfo.guessNumberLength}
         >
           <CiBaseball size={50} className=" fill-pointBlue group-disabled:fill-pointBlue/20" />
         </button>
