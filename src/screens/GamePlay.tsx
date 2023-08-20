@@ -16,16 +16,15 @@ interface GamePlayProps {
 }
 
 const GamePlay = ({ bettingPoint }: GamePlayProps) => {
+  const [isTurnStart, setIsTurnStart] = useState(true);
   const [guessNumber, setGuessNumber] = useState('');
   const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>([]);
   const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
   const [infoModalSetting, setInfoModalSetting] = useState<{
     type: InfoType;
-    open: boolean;
     result: ResultInfo | null;
   }>({
     type: 'result',
-    open: false,
     result: null,
   });
   const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
@@ -40,8 +39,9 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
       {
         onSuccess: (data) => {
           AuthInputRef.current?.clear();
-          setInfoModalSetting({ type: 'result', open: true, result: data.results.at(-1) });
+          setInfoModalSetting({ type: 'result', result: data.results.at(-1) });
           setGameResults(data.results);
+          setIsTurnStart(false);
         },
       },
     );
@@ -51,10 +51,10 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
     if (turnRemainTime === 0) {
       setInfoModalSetting({
         type: 'next',
-        open: true,
         result: null,
       });
       setGameResults((prev) => [...prev, null]);
+      setIsTurnStart(false);
     }
   }, [turnRemainTime]);
 
@@ -70,7 +70,7 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
       {/* TODO earnablePoint - start api 호출 응답 */}
       <PointInfo earnablePoint={0} />
       <CountdownBar
-        isTurnStart
+        isTurnStart={isTurnStart}
         initialTimePerTurn={INITIAL_TIME_PER_TURN}
         turnRemainTime={turnRemainTime}
         setTurnRemainTime={setTurnRemainTime}
@@ -87,11 +87,13 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
           <CiBaseball size={50} className=" fill-pointBlue group-disabled:fill-pointBlue/20" />
         </button>
       </div>
-      {infoModalSetting.open && (
+      {!isTurnStart && (
         <InfoModal
           infoType={infoModalSetting.type}
           result={infoModalSetting.result}
-          onClose={() => setInfoModalSetting((prev) => ({ ...prev, open: false }))}
+          onClose={() => {
+            setIsTurnStart(true);
+          }}
         />
       )}
     </div>
