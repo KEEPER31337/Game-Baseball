@@ -27,7 +27,6 @@ const CountdownBar = ({ isTurnStart, initialTimePerTurn, turnRemainTime, setTurn
   };
 
   useEffect(() => {
-    console.log(turnRemainTime);
     if (turnRemainTime === 0) countdownStop();
   }, [turnRemainTime]);
 
