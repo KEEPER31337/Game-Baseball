@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { CiBaseball } from 'react-icons/ci';
 import { AuthCodeRef } from 'react-auth-code-input';
 import PointInfo from '../components/PointInfo';
@@ -36,15 +36,26 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
     );
   };
 
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    function resizeListener() {
+      setInnerWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', resizeListener);
+  });
+
   if (gameInfoLoading || !gameInfo) return null;
   return (
     <div>
       <PointInfo earnablePoint={bettingPoint} />
+      {innerWidth > 768 && <div className="my-5" />}
       <CountdownBar isTurnStart />
+      {innerWidth > 768 && <div className="my-8" />}
       <TurnInfoBoard
         results={[{ ball: 1, strike: 2, guessNumber: '1234' }, null, { ball: 2, strike: 1, guessNumber: '2345' }]}
         round={gameInfo.tryCount}
       />
+      {innerWidth > 768 && <div className="my-8" />}
       <div className="flex items-center space-x-1">
         <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
         <button
