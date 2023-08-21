@@ -1,19 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 interface CountdownBarProps {
   isTurnStart: boolean;
+  initialTimePerTurn: number;
+  turnRemainTime: number;
+  setTurnRemainTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const CountdownBar = ({ isTurnStart }: CountdownBarProps) => {
-  const maxCount = 30;
-  const [count, setCount] = useState(maxCount);
+const CountdownBar = ({ isTurnStart, initialTimePerTurn, turnRemainTime, setTurnRemainTime }: CountdownBarProps) => {
   const interval = useRef<NodeJS.Timeout | null>(null);
-  const countPercentage = (count / maxCount) * 100;
+  const countPercentage = (turnRemainTime / initialTimePerTurn) * 100;
 
   const countdownStart = () => {
     if (!interval.current) {
       interval.current = setInterval(() => {
-        setCount((cnt) => cnt - 1);
+        setTurnRemainTime((cnt) => cnt - 1);
       }, 1000);
     }
   };
@@ -26,12 +27,12 @@ const CountdownBar = ({ isTurnStart }: CountdownBarProps) => {
   };
 
   useEffect(() => {
-    if (count < 1) countdownStop();
-  }, [count]);
+    if (turnRemainTime < 1) countdownStop();
+  }, [turnRemainTime]);
 
   useEffect(() => {
     if (isTurnStart === true) {
-      setCount(maxCount);
+      setTurnRemainTime(initialTimePerTurn);
       countdownStart();
     } else countdownStop();
   }, [isTurnStart]);

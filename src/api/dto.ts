@@ -15,3 +15,5 @@ export interface GameInfo {
   maxBettingPoint: number;
   minBettingPoint: number;
 }
+
+export type GameStatus = 'NOT_START' | 'PLAYING' | 'END';

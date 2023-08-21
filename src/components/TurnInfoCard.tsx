@@ -17,10 +17,10 @@ const TurnInfoCard = ({ index, status, result }: TurnInfoCardProps) => {
       <p className={`w-12 text-right ${status === 'Playing' ? 'text-pointBlue' : 'text-pointGray'}`}>{index}</p>
       <p className="w-32 text-center">{status === 'Finished' && result === null ? '❌' : result?.guessNumber}</p>
       <p className="w-14 tracking-widest">
-        {result?.ball && result?.ball !== 0 ? '🟢' : '⚫️'} {result?.ball}
+        {result?.strike && result?.strike !== 0 ? '🟢' : '⚫️'} {result?.strike}
       </p>
       <p className="w-16 tracking-widest">
-        {result?.strike && result?.strike !== 0 ? '🟡' : '⚫️'} {result?.strike}
+        {result?.ball && result?.ball !== 0 ? '🟡' : '⚫️'} {result?.ball}
       </p>
     </div>
   );

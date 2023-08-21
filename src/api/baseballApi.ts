@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useQuery, useMutation } from 'react-query';
-import { GameInfo, GameResultInfo } from './dto';
+import { GameInfo, GameResultInfo, GameStatus } from './dto';
 
 const quearyKeys = {
   game_info: ['game_info'] as const,
-  is_already_played: ['is_already_played'] as const,
+  status: ['status'] as const,
   result: ['result'] as const,
 };
 
@@ -14,10 +14,10 @@ const useGetGameInfoQuery = () => {
   return useQuery<GameInfo>(quearyKeys.game_info, fetcher);
 };
 
-const useGetIsAlreadyPlayedQuery = () => {
-  const fetcher = () => axios.get('/game/baseball/is-already-played').then(({ data }) => data);
+const useGetBaseBallStatusQuery = () => {
+  const fetcher = () => axios.get('/game/baseball/status').then(({ data }) => data);
 
-  return useQuery<boolean>(quearyKeys.is_already_played, fetcher);
+  return useQuery<{ status: GameStatus; baseballPerDay: number }>(quearyKeys.status, fetcher);
 };
 
 const useGameStartMutation = () => {
@@ -36,8 +36,7 @@ const useGuessMutation = () => {
 
 const useGetResultQuery = () => {
   const fetcher = () => axios.get('/game/baseball/result').then(({ data }) => data);
-
   return useQuery<GameResultInfo>(quearyKeys.result, fetcher);
 };
 
-export { useGetGameInfoQuery, useGetIsAlreadyPlayedQuery, useGameStartMutation, useGuessMutation, useGetResultQuery };
+export { useGetGameInfoQuery, useGetBaseBallStatusQuery, useGameStartMutation, useGuessMutation, useGetResultQuery };

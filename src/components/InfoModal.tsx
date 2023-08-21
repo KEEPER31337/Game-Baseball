@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ResultInfo } from '../api/dto';
 
+export type InfoType = 'win' | 'lose' | 'next' | 'result';
+
 interface InfoModalProps {
   onClose: () => void;
-  infoType: 'win' | 'lose' | 'next' | 'result';
-  results?: ResultInfo;
+  infoType: InfoType;
+  result?: ResultInfo | null;
 }
 
-const InfoModal = ({ onClose, infoType, results }: InfoModalProps) => {
+const InfoModal = ({ onClose, infoType, result }: InfoModalProps) => {
   const msg = {
     win: {
       main: 'congraturation',
@@ -34,8 +36,8 @@ const InfoModal = ({ onClose, infoType, results }: InfoModalProps) => {
 
   useEffect(() => {
     setInfoText({
-      main: msg[infoType]?.main || String(results?.guessNumber),
-      sub: msg[infoType]?.sub || `STRIKE ${String(results?.strike)} BALL ${String(results?.ball)}`,
+      main: msg[infoType]?.main || String(result?.guessNumber),
+      sub: msg[infoType]?.sub || `STRIKE ${String(result?.strike)} BALL ${String(result?.ball)}`,
     });
 
     interval.current = setInterval(() => {
