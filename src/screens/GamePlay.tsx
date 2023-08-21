@@ -10,6 +10,7 @@ import { useGuessMutation, useGetGameInfoQuery, useGetResultQuery } from '../api
 import { GameResultInfo, ResultInfo } from '../api/dto';
 
 const INITIAL_TIME_PER_TURN = 30;
+const MOBLIE_MAX_WIDTH = 768;
 
 interface GamePlayProps {
   bettingPoint: string;
@@ -47,6 +48,14 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
     );
   };
 
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    function resizeListener() {
+      setInnerWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', resizeListener);
+  });
+
   useEffect(() => {
     if (turnRemainTime === 0) {
       setInfoModalSetting({
@@ -67,15 +76,17 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
   if (gameInfoLoading || !gameInfo) return null;
   return (
     <div>
-      {/* TODO earnablePoint - start api 호출 응답 */}
-      <PointInfo earnablePoint={0} />
+      <PointInfo earnablePoint={bettingPoint} />
+      {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-5" />}
       <CountdownBar
         isTurnStart={isTurnStart}
         initialTimePerTurn={INITIAL_TIME_PER_TURN}
         turnRemainTime={turnRemainTime}
         setTurnRemainTime={setTurnRemainTime}
       />
+      {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-8" />}
       <TurnInfoBoard results={gameResults} round={gameInfo.tryCount} />
+      {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-8" />}
       <div className="flex items-center space-x-4">
         <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
         <button

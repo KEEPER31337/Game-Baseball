@@ -27,18 +27,17 @@ const GameStart = ({ onStart, status, bettingPoint, setBettingPoint }: GameStart
           <input
             value={bettingPoint}
             onChange={(e) => {
-              setBettingPoint(e.target.value.replace(/[^0-9]/g, ''));
+              const value = e.target.value.replace(/[^0-9]/g, '');
+              if (value === '0') setBettingPoint(String(gameInfo.minBettingPoint));
+              else if (gameInfo.maxBettingPoint < Number(value)) setBettingPoint(String(gameInfo.maxBettingPoint));
+              else setBettingPoint(value);
             }}
             className="mb-20 w-[400px] border-[1px] border-pointBlue bg-transparent text-center text-[40px] focus:outline-none"
             type="text"
             placeholder={`${gameInfo.minBettingPoint} ~ ${gameInfo.maxBettingPoint}`}
           />
           <button
-            disabled={
-              parseInt(bettingPoint, 10) > gameInfo.maxBettingPoint ||
-              parseInt(bettingPoint, 10) < gameInfo.minBettingPoint ||
-              bettingPoint === ''
-            }
+            disabled={parseInt(bettingPoint, 10) < gameInfo.minBettingPoint || bettingPoint === ''}
             className="text-2xl enabled:hover:text-pointBlue disabled:text-gray-500"
             onClick={onStart}
             type="button"
