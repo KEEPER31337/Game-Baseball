@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 interface CountdownBarProps {
   isTurnStart: boolean;
@@ -10,6 +10,7 @@ interface CountdownBarProps {
 const CountdownBar = ({ isTurnStart, initialTimePerTurn, turnRemainTime, setTurnRemainTime }: CountdownBarProps) => {
   const interval = useRef<NodeJS.Timeout | null>(null);
   const countPercentage = ((turnRemainTime - 1) / (initialTimePerTurn - 1)) * 100;
+  const [animation, setAnimation] = useState('transition-all duration-1000 ease-linear');
 
   const countdownStart = () => {
     if (!interval.current) {
@@ -27,7 +28,10 @@ const CountdownBar = ({ isTurnStart, initialTimePerTurn, turnRemainTime, setTurn
   };
 
   useEffect(() => {
-    if (turnRemainTime === 0) countdownStop();
+    if (turnRemainTime === 0) {
+      countdownStop();
+      setAnimation('transition-none');
+    } else if (turnRemainTime === initialTimePerTurn) setAnimation('transition-all duration-1000 ease-linear');
   }, [turnRemainTime]);
 
   useEffect(() => {
@@ -39,11 +43,8 @@ const CountdownBar = ({ isTurnStart, initialTimePerTurn, turnRemainTime, setTurn
 
   return (
     <div>
-      <div className="mb-3 h-6 w-[350px] bg-pointGray">
-        <div
-          style={{ width: `${countPercentage}%` }}
-          className="h-6 bg-pointBlue transition-all duration-1000 ease-linear"
-        />
+      <div className="h-6 w-[350px] bg-pointGray">
+        <div style={{ width: `${countPercentage}%` }} className={`h-6 bg-pointBlue ${animation}`} />
       </div>
     </div>
   );
