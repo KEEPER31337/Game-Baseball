@@ -15,11 +15,11 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (baseballStatus?.status === 'PLAYING') {
-      setPlayMode(true);
+    if (!baseballStatus || baseballStatus.status === 'NOT_START') {
+      setPlayMode(false);
       return;
     }
-    setPlayMode(false);
+    setPlayMode(true);
   }, [baseballStatus]);
 
   if (!baseballStatus) return null;
@@ -28,12 +28,7 @@ const App = () => {
       {playMode ? (
         <GamePlay bettingPoint={bettingPoint} />
       ) : (
-        <GameStart
-          status={baseballStatus.status}
-          onStart={handleStart}
-          bettingPoint={bettingPoint}
-          setBettingPoint={setBettingPoint}
-        />
+        <GameStart onStart={handleStart} bettingPoint={bettingPoint} setBettingPoint={setBettingPoint} />
       )}
     </div>
   );
