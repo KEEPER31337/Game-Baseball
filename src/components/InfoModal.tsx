@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ResultInfo } from '../api/dto';
 
-export type InfoType = 'win' | 'lose' | 'next' | 'result';
+export type InfoType = 'next' | 'result';
 
 interface InfoModalProps {
   onClose: () => void;
@@ -11,14 +11,6 @@ interface InfoModalProps {
 
 const InfoModal = ({ onClose, infoType, result }: InfoModalProps) => {
   const msg = {
-    win: {
-      main: 'congraturation',
-      sub: 'YOU WIN!',
-    },
-    lose: {
-      main: 'no more chance',
-      sub: 'GAME OVER',
-    },
     next: {
       main: "time's up",
       sub: 'NEXT TURN',
