@@ -24,7 +24,7 @@ const App = () => {
 
   if (!baseballStatus) return null;
   return (
-    <div className="grid h-screen w-screen place-items-center bg-mainBlack">
+    <div className="relative grid h-screen w-screen select-none place-items-center bg-mainBlack">
       {playMode ? (
         <GamePlay bettingPoint={bettingPoint} />
       ) : (
