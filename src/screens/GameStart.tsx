@@ -1,16 +1,14 @@
 import React from 'react';
-import { useGetGameInfoQuery } from '../api/baseballApi';
+import { GameInfo } from '../api/dto';
 
 interface GameStartProps {
+  gameInfo: GameInfo;
   onStart: () => void;
   bettingPoint: string;
   setBettingPoint: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const GameStart = ({ onStart, bettingPoint, setBettingPoint }: GameStartProps) => {
-  const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
-
-  if (gameInfoLoading || !gameInfo) return null;
+const GameStart = ({ gameInfo, onStart, bettingPoint, setBettingPoint }: GameStartProps) => {
   return (
     <div className="flex h-full w-full flex-col place-content-center place-items-center">
       <div className="mb-10 text-[40px] font-bold text-pointBlue">BASEBALL GAME</div>

@@ -6,21 +6,23 @@ import CountdownBar from '../components/CountdownBar';
 import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
 import InfoModal, { InfoType } from '../components/InfoModal';
-import { useGuessMutation, useGetGameInfoQuery, useGetResultQuery } from '../api/baseballApi';
-import { ResultInfo } from '../api/dto';
+import { useGuessMutation, useGetResultQuery } from '../api/baseballApi';
+import { GameInfo, ResultInfo } from '../api/dto';
 import NoticeEnd from '../components/NoticeEnd';
 
 const INITIAL_TIME_PER_TURN = 30;
 const MOBLIE_MAX_WIDTH = 768;
 
 interface GamePlayProps {
-  bettingPoint: string;
+  gameInfo: GameInfo;
+  initEarnablePoint: number;
 }
 
-const GamePlay = ({ bettingPoint }: GamePlayProps) => {
+const GamePlay = ({ gameInfo, initEarnablePoint }: GamePlayProps) => {
   const [isTurnStart, setIsTurnStart] = useState(true);
   const [guessNumber, setGuessNumber] = useState('');
   const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>([]);
+  const [earnablePoint, setEarnablePoint] = useState(initEarnablePoint);
   const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
   const [infoModalSetting, setInfoModalSetting] = useState<{
     type: InfoType;
@@ -29,10 +31,9 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
     type: 'result',
     result: null,
   });
-  const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
-  const { data: currentGameCondition } = useGetResultQuery();
-  const isWin: boolean = (gameInfo && gameResults.at(-1)?.strike === gameInfo.guessNumberLength) ?? false;
-  const isLose: boolean = (gameInfo && gameResults.length === gameInfo.tryCount && !isWin) ?? false;
+  const { data: currentGameCondition, refetch: refetchCurrentGameCondition } = useGetResultQuery();
+  const isWin: boolean = gameResults.at(-1)?.strike === gameInfo.guessNumberLength ?? false;
+  const isLose: boolean = (gameResults.length === gameInfo.tryCount && !isWin) ?? false;
 
   const AuthInputRef = useRef<AuthCodeRef>(null);
   const { mutate: guess } = useGuessMutation();
@@ -44,7 +45,6 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
         onSuccess: (data) => {
           AuthInputRef.current?.clear();
           setInfoModalSetting({ type: 'result', result: data.results.at(-1) });
-          setGameResults(data.results);
           setIsTurnStart(false);
         },
       },
@@ -65,7 +65,7 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
         type: 'next',
         result: null,
       });
-      setGameResults((prev) => [...prev, null]);
+      refetchCurrentGameCondition();
       setIsTurnStart(false);
     }
   }, [turnRemainTime]);
@@ -73,13 +73,13 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
   useEffect(() => {
     if (currentGameCondition) {
       setGameResults(currentGameCondition.results);
+      setEarnablePoint(currentGameCondition.earnablePoint);
     }
   }, [currentGameCondition]);
 
-  if (gameInfoLoading || !gameInfo) return null;
   return (
     <div>
-      <PointInfo earnablePoint={bettingPoint} />
+      <PointInfo earnablePoint={earnablePoint} />
       {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-5" />}
       <CountdownBar
         isTurnStart={!isWin && !isLose && isTurnStart}
