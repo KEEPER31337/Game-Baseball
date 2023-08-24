@@ -7,6 +7,7 @@ export interface ResultInfo {
 export interface GameResultInfo {
   results: Array<ResultInfo | null>;
   earnablePoint: number;
+  remainedSecond: number;
 }
 
 export interface GameInfo {

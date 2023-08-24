@@ -74,6 +74,7 @@ const GamePlay = ({ gameInfo, initEarnablePoint }: GamePlayProps) => {
     if (currentGameCondition) {
       setGameResults(currentGameCondition.results);
       setEarnablePoint(currentGameCondition.earnablePoint);
+      setTurnRemainTime(currentGameCondition.remainedSecond);
     }
   }, [currentGameCondition]);
 
