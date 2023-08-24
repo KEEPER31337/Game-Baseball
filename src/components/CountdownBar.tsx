@@ -43,7 +43,7 @@ const CountdownBar = ({ isTurnStart, initialTimePerTurn, turnRemainTime, setTurn
 
   return (
     <div>
-      <div className="h-6 w-[350px] bg-pointGray">
+      <div className="h-6 bg-pointGray md:w-[350px]">
         <div style={{ width: `${countPercentage}%` }} className={`h-6 bg-pointBlue ${animation}`} />
       </div>
     </div>

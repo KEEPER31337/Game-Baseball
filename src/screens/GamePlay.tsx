@@ -11,7 +11,6 @@ import { GameInfo, ResultInfo } from '../api/dto';
 import NoticeEnd from '../components/NoticeEnd';
 
 const INITIAL_TIME_PER_TURN = 30;
-const MOBLIE_MAX_WIDTH = 768;
 
 interface GamePlayProps {
   gameInfo: GameInfo;
@@ -51,14 +50,6 @@ const GamePlay = ({ gameInfo, initEarnablePoint }: GamePlayProps) => {
     );
   };
 
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    function resizeListener() {
-      setInnerWidth(window.innerWidth);
-    }
-    window.addEventListener('resize', resizeListener);
-  });
-
   useEffect(() => {
     if (turnRemainTime === 0) {
       setInfoModalSetting({
@@ -81,29 +72,28 @@ const GamePlay = ({ gameInfo, initEarnablePoint }: GamePlayProps) => {
   return (
     <div>
       <PointInfo earnablePoint={earnablePoint} />
-      {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-5" />}
-      <CountdownBar
-        isTurnStart={!isWin && !isLose && isTurnStart}
-        initialTimePerTurn={INITIAL_TIME_PER_TURN}
-        turnRemainTime={turnRemainTime}
-        setTurnRemainTime={setTurnRemainTime}
-      />
-      {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-8" />}
-      <TurnInfoBoard isWin={isWin} results={gameResults} round={gameInfo.tryCount} />
-      {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-8" />}
-      {!isWin && !isLose && (
-        <div className="flex items-center space-x-4">
-          <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
-          <button
-            type="button"
-            className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20"
-            onClick={handleGuessClick}
-            disabled={guessNumber.length !== gameInfo.guessNumberLength}
-          >
-            <CiBaseball size={50} className="fill-pointBlue group-disabled:fill-pointBlue/20" />
-          </button>
-        </div>
-      )}
+      <div className="mt-6 space-y-8 md:mt-4 md:space-y-6">
+        <CountdownBar
+          isTurnStart={!isWin && !isLose && isTurnStart}
+          initialTimePerTurn={INITIAL_TIME_PER_TURN}
+          turnRemainTime={turnRemainTime}
+          setTurnRemainTime={setTurnRemainTime}
+        />
+        <TurnInfoBoard isWin={isWin} results={gameResults} round={gameInfo.tryCount} />
+        {!isWin && !isLose && (
+          <div className="flex items-center space-x-4">
+            <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
+            <button
+              type="button"
+              className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20"
+              onClick={handleGuessClick}
+              disabled={guessNumber.length !== gameInfo.guessNumberLength}
+            >
+              <CiBaseball size={50} className="fill-pointBlue group-disabled:fill-pointBlue/20" />
+            </button>
+          </div>
+        )}
+      </div>
       {!isTurnStart && (
         <InfoModal
           infoType={infoModalSetting.type}
