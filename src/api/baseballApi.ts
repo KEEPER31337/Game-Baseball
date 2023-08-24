@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { GameInfo, GameResultInfo, GameStatus } from './dto';
 
 const quearyKeys = {
@@ -31,7 +31,12 @@ const useGuessMutation = () => {
   const fetcher = ({ guessNumber }: { guessNumber: string }) =>
     axios.post('/game/baseball/guess', { guessNumber }).then(({ data }) => data);
 
-  return useMutation(fetcher);
+  const queryClient = useQueryClient();
+  return useMutation(fetcher, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: quearyKeys.result });
+    },
+  });
 };
 
 const useGetResultQuery = () => {

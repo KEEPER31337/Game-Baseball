@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface PointInfoProps {
-  earnablePoint: string;
+  earnablePoint: number;
 }
 
 const PointInfo = ({ earnablePoint }: PointInfoProps) => {

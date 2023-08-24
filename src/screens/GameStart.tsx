@@ -1,20 +1,18 @@
 import React from 'react';
-import { useGetGameInfoQuery } from '../api/baseballApi';
+import { GameInfo } from '../api/dto';
 
 interface GameStartProps {
+  gameInfo: GameInfo;
   onStart: () => void;
   bettingPoint: string;
   setBettingPoint: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const GameStart = ({ onStart, bettingPoint, setBettingPoint }: GameStartProps) => {
-  const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
-
-  if (gameInfoLoading || !gameInfo) return null;
+const GameStart = ({ gameInfo, onStart, bettingPoint, setBettingPoint }: GameStartProps) => {
   return (
     <div className="flex h-full w-full flex-col place-content-center place-items-center">
-      <div className="mb-10 text-[40px] font-bold text-pointBlue">BASEBALL GAME</div>
-      <div className="mb-10 text-2xl">betting your point...</div>
+      <div className="mx-10 mb-16 text-[40px] font-bold text-pointBlue md:mb-10">BASEBALL GAME</div>
+      <div className="mb-10 text-center text-xl md:text-2xl">betting your point...</div>
       <input
         value={bettingPoint}
         onChange={(e) => {
@@ -23,7 +21,7 @@ const GameStart = ({ onStart, bettingPoint, setBettingPoint }: GameStartProps) =
           else if (gameInfo.maxBettingPoint < Number(value)) setBettingPoint(String(gameInfo.maxBettingPoint));
           else setBettingPoint(value);
         }}
-        className="mb-20 w-[400px] border-[1px] border-pointBlue bg-transparent text-center text-[40px] focus:outline-none"
+        className="mb-20 w-72 border-[1px] border-pointBlue bg-transparent text-center text-[40px] focus:outline-none md:w-[400px]"
         type="text"
         placeholder={`${gameInfo.minBettingPoint} ~ ${gameInfo.maxBettingPoint}`}
       />
