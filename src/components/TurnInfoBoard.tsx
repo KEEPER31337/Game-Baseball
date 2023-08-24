@@ -3,12 +3,14 @@ import TurnInfoCard from './TurnInfoCard';
 import { ResultInfo } from '../api/dto';
 
 interface TurnInfoBoardProps {
+  isWin: boolean;
   results: Array<ResultInfo | null>;
   round: number;
 }
 
-const TurnInfoBoard = ({ results, round }: TurnInfoBoardProps) => {
+const TurnInfoBoard = ({ isWin, results, round }: TurnInfoBoardProps) => {
   const renderList: Array<'Ready' | 'Playing' | 'Finished'> = Array.from({ length: round }, (v, i) => {
+    if (isWin) return 'Finished';
     if (i === results.length) return 'Playing';
     if (i > results.length) return 'Ready';
     return 'Finished';

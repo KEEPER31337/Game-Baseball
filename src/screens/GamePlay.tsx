@@ -7,7 +7,8 @@ import TurnInfoBoard from '../components/TurnInfoBoard';
 import NumberInput from '../components/NumberInput';
 import InfoModal, { InfoType } from '../components/InfoModal';
 import { useGuessMutation, useGetGameInfoQuery, useGetResultQuery } from '../api/baseballApi';
-import { GameResultInfo, ResultInfo } from '../api/dto';
+import { ResultInfo } from '../api/dto';
+import NoticeEnd from '../components/NoticeEnd';
 
 const INITIAL_TIME_PER_TURN = 30;
 const MOBLIE_MAX_WIDTH = 768;
@@ -30,6 +31,8 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
   });
   const { data: gameInfo, isLoading: gameInfoLoading } = useGetGameInfoQuery();
   const { data: currentGameCondition } = useGetResultQuery();
+  const isWin: boolean = (gameInfo && gameResults.at(-1)?.strike === gameInfo.guessNumberLength) ?? false;
+  const isLose: boolean = (gameInfo && gameResults.length === gameInfo.tryCount && !isWin) ?? false;
 
   const AuthInputRef = useRef<AuthCodeRef>(null);
   const { mutate: guess } = useGuessMutation();
@@ -79,25 +82,27 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
       <PointInfo earnablePoint={bettingPoint} />
       {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-5" />}
       <CountdownBar
-        isTurnStart={isTurnStart}
+        isTurnStart={!isWin && !isLose && isTurnStart}
         initialTimePerTurn={INITIAL_TIME_PER_TURN}
         turnRemainTime={turnRemainTime}
         setTurnRemainTime={setTurnRemainTime}
       />
       {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-8" />}
-      <TurnInfoBoard results={gameResults} round={gameInfo.tryCount} />
+      <TurnInfoBoard isWin={isWin} results={gameResults} round={gameInfo.tryCount} />
       {innerWidth > MOBLIE_MAX_WIDTH && <div className="my-8" />}
-      <div className="flex items-center space-x-4">
-        <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
-        <button
-          type="button"
-          className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20 "
-          onClick={handleGuessClick}
-          disabled={guessNumber.length !== gameInfo.guessNumberLength}
-        >
-          <CiBaseball size={50} className=" fill-pointBlue group-disabled:fill-pointBlue/20" />
-        </button>
-      </div>
+      {!isWin && !isLose && (
+        <div className="flex items-center space-x-4">
+          <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
+          <button
+            type="button"
+            className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20"
+            onClick={handleGuessClick}
+            disabled={guessNumber.length !== gameInfo.guessNumberLength}
+          >
+            <CiBaseball size={50} className="fill-pointBlue group-disabled:fill-pointBlue/20" />
+          </button>
+        </div>
+      )}
       {!isTurnStart && (
         <InfoModal
           infoType={infoModalSetting.type}
@@ -107,6 +112,8 @@ const GamePlay = ({ bettingPoint }: GamePlayProps) => {
           }}
         />
       )}
+      {isWin && <NoticeEnd endType="win" />}
+      {isLose && <NoticeEnd endType="lose" />}
     </div>
   );
 };

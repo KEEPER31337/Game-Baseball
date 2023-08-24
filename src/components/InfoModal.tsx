@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ResultInfo } from '../api/dto';
 
-export type InfoType = 'win' | 'lose' | 'next' | 'result';
+export type InfoType = 'next' | 'result';
 
 interface InfoModalProps {
   onClose: () => void;
@@ -11,14 +11,6 @@ interface InfoModalProps {
 
 const InfoModal = ({ onClose, infoType, result }: InfoModalProps) => {
   const msg = {
-    win: {
-      main: 'congraturation',
-      sub: 'YOU WIN!',
-    },
-    lose: {
-      main: 'no more chance',
-      sub: 'GAME OVER',
-    },
     next: {
       main: "time's up",
       sub: 'NEXT TURN',
@@ -53,7 +45,7 @@ const InfoModal = ({ onClose, infoType, result }: InfoModalProps) => {
   }, [count]);
 
   return (
-    <div className="absolute left-0 top-0 z-10 flex h-screen w-screen items-center justify-center bg-black/50">
+    <div className="absolute left-0 top-0 z-20 flex h-screen w-screen items-center justify-center bg-black/50">
       <div className="flex h-[260px] w-[490px] flex-col justify-center space-y-4 border bg-black text-center text-4xl drop-shadow-[0px_0px_5px_rgba(76,238,249,0.3)]">
         <p>{msg[infoType].main}</p>
         <p className="drop-shadow-[0px_0px_1px_rgba(76,238,249,1)]">{msg[infoType].sub}</p>
