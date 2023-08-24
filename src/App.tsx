@@ -33,7 +33,11 @@ const App = () => {
   return (
     <div className="relative grid h-screen w-screen select-none place-items-center bg-mainBlack">
       {playMode ? (
-        <GamePlay gameInfo={gameInfo} initEarnablePoint={startData?.earnablePoint ?? 0} />
+        <GamePlay
+          isPlaying={baseballStatus.status === 'PLAYING'}
+          gameInfo={gameInfo}
+          initEarnablePoint={startData?.earnablePoint ?? 0}
+        />
       ) : (
         <GameStart
           gameInfo={gameInfo}

@@ -13,11 +13,12 @@ import NoticeEnd from '../components/NoticeEnd';
 const INITIAL_TIME_PER_TURN = 30;
 
 interface GamePlayProps {
+  isPlaying: boolean;
   gameInfo: GameInfo;
   initEarnablePoint: number;
 }
 
-const GamePlay = ({ gameInfo, initEarnablePoint }: GamePlayProps) => {
+const GamePlay = ({ isPlaying, gameInfo, initEarnablePoint }: GamePlayProps) => {
   const [isTurnStart, setIsTurnStart] = useState(true);
   const [guessNumber, setGuessNumber] = useState('');
   const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>([]);
@@ -51,7 +52,7 @@ const GamePlay = ({ gameInfo, initEarnablePoint }: GamePlayProps) => {
   };
 
   useEffect(() => {
-    if (turnRemainTime === 0) {
+    if (isPlaying && turnRemainTime === 0) {
       setInfoModalSetting({
         type: 'next',
         result: null,
