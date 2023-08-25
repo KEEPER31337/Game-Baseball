@@ -21,6 +21,7 @@ interface GamePlayProps {
 const GamePlay = ({ isPlaying, gameInfo, initEarnablePoint }: GamePlayProps) => {
   const [isTurnStart, setIsTurnStart] = useState(true);
   const [guessNumber, setGuessNumber] = useState('');
+  const isDuplicated = guessNumber.length !== new Set(guessNumber).size;
   const [gameResults, setGameResults] = useState<(ResultInfo | null)[]>([]);
   const [earnablePoint, setEarnablePoint] = useState(initEarnablePoint);
   const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
@@ -83,7 +84,11 @@ const GamePlay = ({ isPlaying, gameInfo, initEarnablePoint }: GamePlayProps) => 
         <TurnInfoBoard isWin={isWin} results={gameResults} round={gameInfo.tryCount} />
         {!isWin && !isLose && (
           <div className="flex items-center space-x-4">
-            <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
+            <NumberInput
+              AuthInputRef={AuthInputRef}
+              onChange={(res: string) => setGuessNumber(res)}
+              error={isDuplicated}
+            />
             <button
               type="button"
               className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20"
