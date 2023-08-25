@@ -93,7 +93,7 @@ const GamePlay = ({ isPlaying, gameInfo, initEarnablePoint }: GamePlayProps) => 
               type="button"
               className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20"
               onClick={handleGuessClick}
-              disabled={guessNumber.length !== gameInfo.guessNumberLength}
+              disabled={guessNumber.length !== gameInfo.guessNumberLength || isDuplicated}
             >
               <CiBaseball size={50} className="fill-pointBlue group-disabled:fill-pointBlue/20" />
             </button>
