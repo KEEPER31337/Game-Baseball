@@ -13,6 +13,7 @@ const INITIAL_TIME_PER_TURN = 30;
 
 const GamePlay = () => {
   const [guessNumber, setGuessNumber] = useState('');
+  const isDuplicated = guessNumber.length !== new Set(guessNumber).size;
   const [turnRemainTime, setTurnRemainTime] = useState(INITIAL_TIME_PER_TURN);
   const [infoModalSetting, setInfoModalSetting] = useState<{
     type: InfoType;
@@ -65,21 +66,16 @@ const GamePlay = () => {
         round={gameInfo.tryCount}
       />
       <div className="flex items-center space-x-4">
-        <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} />
+        <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} error={isDuplicated} />
         <button
           type="button"
           className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20 "
           onClick={handleGuessClick}
-          disabled={
-            Number(guessNumber) < 1000 || Number(guessNumber) > 9999 || guessNumber.length !== new Set(guessNumber).size
-          }
+          disabled={Number(guessNumber) < 1000 || Number(guessNumber) > 9999 || isDuplicated}
         >
           <CiBaseball size={50} className=" fill-pointBlue group-disabled:fill-pointBlue/20" />
         </button>
       </div>
-      {guessNumber.length !== new Set(guessNumber).size && (
-        <p className="mt-3 text-xl text-[#ff0000]">중복된 숫자가 있습니다</p>
-      )}
       {infoModalSetting.open && (
         <InfoModal
           infoType={infoModalSetting.type}
