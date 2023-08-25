@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ResultInfo } from '../api/dto';
 
-export type InfoType = 'win' | 'lose' | 'next' | 'result';
+export type InfoType = 'next' | 'result';
 
 interface InfoModalProps {
   onClose: () => void;
@@ -11,35 +11,25 @@ interface InfoModalProps {
 
 const InfoModal = ({ onClose, infoType, result }: InfoModalProps) => {
   const msg = {
-    win: {
-      main: 'congraturation',
-      sub: 'YOU WIN!',
-    },
-    lose: {
-      main: 'no more chance',
-      sub: 'GAME OVER',
-    },
     next: {
       main: "time's up",
       sub: 'NEXT TURN',
     },
     result: {
-      main: null,
-      sub: null,
+      main: result?.guessNumber,
+      sub: (
+        <>
+          STRIKE <span className="mr-4 text-pointBlue">{result?.strike}</span>
+          BALL <span className="text-pointBlue">{result?.ball}</span>
+        </>
+      ),
     },
   };
-
-  const [infoText, setInfoText] = useState({ main: '', sub: '' });
 
   const [count, setCount] = useState(3);
   const interval = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    setInfoText({
-      main: msg[infoType]?.main || String(result?.guessNumber),
-      sub: msg[infoType]?.sub || `STRIKE ${String(result?.strike)} BALL ${String(result?.ball)}`,
-    });
-
     interval.current = setInterval(() => {
       setCount((cnt) => cnt - 1);
     }, 1000);
@@ -55,10 +45,10 @@ const InfoModal = ({ onClose, infoType, result }: InfoModalProps) => {
   }, [count]);
 
   return (
-    <div className="absolute left-0 top-0 z-10 flex h-screen w-screen items-center justify-center bg-black/50">
-      <div className="flex h-[260px] w-[490px] flex-col justify-center space-y-4 border bg-black text-center text-4xl drop-shadow-[0px_0px_5px_rgba(76,238,249,0.3)]">
-        <p>{infoText.main}</p>
-        <p className="drop-shadow-[0px_0px_1px_rgba(76,238,249,1)]">{infoText.sub}</p>
+    <div className="absolute left-0 top-0 z-20 flex h-screen w-screen items-center justify-center bg-black/50 p-5">
+      <div className="flex h-[260px] w-[490px] flex-col justify-center space-y-4 border bg-black text-center text-3xl drop-shadow-[0px_0px_5px_rgba(76,238,249,0.3)] md:text-4xl">
+        <p>{msg[infoType].main}</p>
+        <p className="drop-shadow-[0px_0px_1px_rgba(76,238,249,1)]">{msg[infoType].sub}</p>
       </div>
     </div>
   );

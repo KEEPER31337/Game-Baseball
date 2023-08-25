@@ -6,8 +6,8 @@ interface PointInfoProps {
 
 const PointInfo = ({ earnablePoint }: PointInfoProps) => {
   return (
-    <div className="grid place-items-center">
-      <p className="text-2xl">POINT {earnablePoint}</p>
+    <div className="mb-1 grid place-items-center">
+      <p className="text-[32px]">POINT {earnablePoint}</p>
     </div>
   );
 };

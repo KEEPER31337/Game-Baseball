@@ -6,7 +6,8 @@ export interface ResultInfo {
 
 export interface GameResultInfo {
   results: Array<ResultInfo | null>;
-  earnablePoints: number;
+  earnablePoint: number;
+  remainedSecond: number;
 }
 
 export interface GameInfo {
@@ -15,3 +16,5 @@ export interface GameInfo {
   maxBettingPoint: number;
   minBettingPoint: number;
 }
+
+export type GameStatus = 'NOT_START' | 'PLAYING' | 'END';
