@@ -84,7 +84,11 @@ const GamePlay = ({ isPlaying, gameInfo, initEarnablePoint }: GamePlayProps) => 
         <TurnInfoBoard isWin={isWin} results={gameResults} round={gameInfo.tryCount} />
         {!isWin && !isLose && (
           <div className="flex items-center space-x-4">
-            <NumberInput AuthInputRef={AuthInputRef} onChange={(res: string) => setGuessNumber(res)} error={isDuplicated} />
+            <NumberInput
+              AuthInputRef={AuthInputRef}
+              onChange={(res: string) => setGuessNumber(res)}
+              error={isDuplicated}
+            />
             <button
               type="button"
               className="group enabled:cursor-pointer enabled:hover:rounded-full enabled:hover:bg-pointBlue/20"

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
 
 interface NumberInputProps {
@@ -9,7 +9,7 @@ interface NumberInputProps {
 
 const NumberInput = ({ AuthInputRef, onChange, error }: NumberInputProps) => {
   return (
-    <Fragment>
+    <div>
       <AuthCode
         ref={AuthInputRef}
         allowedCharacters="numeric"
@@ -22,7 +22,7 @@ const NumberInput = ({ AuthInputRef, onChange, error }: NumberInputProps) => {
       <div className="relative">
         {error && <p className="absolute left-5 top-2 text-center text-[#EF4444]">중복된 숫자가 있습니다</p>}
       </div>
-    </Fragment>
+    </div>
   );
 };
 
